@@ -31,12 +31,6 @@ describe('Gilded Rose', () => {
             expect(updatedItems[0].quality).to.equal(0);
         });
 
-        it('should increase quality by 2 when item name is "Aged Brie"', () => {
-            const gildedRose = new GildedRose([new Item('Aged Brie', 10, 30),]);
-            const updatedItems = gildedRose.itemsWithQualityUpdated(10);
-            expect(updatedItems[0].quality).to.equal(40);
-        });
-
         it('should never increase an items quality to exceed 50', () => {
             const gildedRose = new GildedRose([
                 new Item('Aged Brie', 10, 30),
@@ -53,16 +47,40 @@ describe('Gilded Rose', () => {
             expect(updatedItems[0].quality).to.equal(30);
         });
 
-        it('should increase quality by 2 when item name is "Backstage passes to a TAFKAL80ETC concert" and sellIn days remaining are 10 or less and more than 5',  () =>  {
-            const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 20, 10),]);
-            const updatedItems = gildedRose.itemsWithQualityUpdated(11);
-            expect(updatedItems[0].quality).to.equal(23);
+        it('should increase quality by 2 when item name is "Backstage passes to a TAFKAL80ETC concert" or "Aged Brie" and sellIn days remaining are 10 or less and more than 5',  () =>  {
+            const gildedRose = new GildedRose([
+                new Item('Backstage passes to a TAFKAL80ETC concert', 9, 10),
+                new Item('Aged Brie', 9, 10),
+            ]);
+            const updatedItems = gildedRose.itemsWithQualityUpdated(1);
+            expect(updatedItems[0].quality).to.equal(12);
         });
 
-        it('should increase quality by 3 when item name is "Backstage passes to a TAFKAL80ETC concert" and sellIn days remaining are 5 or less',  () =>  {
-            const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 20, 10),]);
-            const updatedItems = gildedRose.itemsWithQualityUpdated(16);
-            expect(updatedItems[0].quality).to.equal(35);
+        it('should increase quality by 3 when item name is "Backstage passes to a TAFKAL80ETC concert" or "Aged Brie" and sellIn days remaining are 5 or less',  () =>  {
+            const gildedRose = new GildedRose([
+                new Item('Backstage passes to a TAFKAL80ETC concert', 5, 10),
+                new Item('Aged Brie', 5, 10)
+            ]);
+            const updatedItems = gildedRose.itemsWithQualityUpdated(1);
+            expect(updatedItems[0].quality).to.equal(13);
+        });
+
+        it('should increase quality by 2 when item name is "Backstage passes to a TAFKAL80ETC concert" or "Aged Brie" and sellIn days remaining are 6',  () =>  {
+            const gildedRose = new GildedRose([
+                new Item('Backstage passes to a TAFKAL80ETC concert', 6, 10),
+                new Item('Aged Brie', 6, 10)
+            ]);
+            const updatedItems = gildedRose.itemsWithQualityUpdated(1);
+            expect(updatedItems[0].quality).to.equal(12);
+        });
+
+        it('should increase quality by 1 when item name is "Backstage passes to a TAFKAL80ETC concert" or "Aged Brie" and sellIn days remaining are 11',  () =>  {
+            const gildedRose = new GildedRose([
+                new Item('Backstage passes to a TAFKAL80ETC concert', 11, 10),
+                new Item('Aged Brie', 11, 10)
+            ]);
+            const updatedItems = gildedRose.itemsWithQualityUpdated(1);
+            expect(updatedItems[0].quality).to.equal(11);
         });
 
         it('should degrade Conjured item quality twice as fast as a normal item',  () =>  {
